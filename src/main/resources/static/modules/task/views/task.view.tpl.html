@@ -1,0 +1,140 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3 text-center">
+		<form role="form" name="createForm"
+			data-ng-submit="createForm.$valid && createTask()">
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control"
+						data-ng-model="newTask.title" placeholder="task name" required />
+					<input type="text" class="form-control"
+						data-ng-model="newTask.description" placeholder="task description"
+						required /> <span class="input-group-btn add-btn"
+						style="background-color: #fff;">
+						<button type="submit" class="btn btn-primary add-btn">Add task</button>
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row ticket-cols">
+	<div class="column" style="background-color: rgb(207, 238, 247);">
+		<h2>To Do</h2>
+		<p>{{(tasks | filter:{status:'TODO'}).length }} tasks</p>
+		<div data-ng-show="tasks.length>0">
+			<div class="row">
+				<div class="row ticket-wrap"
+					ng-repeat="task in tasks | filter: { status: 'TODO' } | orderBy: 'createdOn' ">
+					<div class="ticket" data-ng-show="editedTask !== task">
+						<div class="col-sm-8 ticket-form">
+							<label class="col-sm-8">{{task.title}}</label>
+							<label class="col-sm-9 descrp">{{task.description}}</label>
+						</div>
+						<div class="col-sm-4 text-right action-icons">
+							<span class="glyphicon glyphicon-remove-circle"
+								data-ng-click="deleteTask(task)"></span> <span
+								class="glyphicon glyphicon-pencil"
+								data-ng-click="editTask(task)"></span> <span
+								class="glyphicon glyphicon-menu-right"
+								data-ng-click="inProgressTask(task)"></span>
+						</div>
+						<div class="col-sm-3 text-right action-icons"></div>
+					</div>
+					<div data-ng-show="editedTask === task" class="col-xs-12 edit-group">
+						<form role="form" name="editForm"
+							data-ng-submit="editForm.$valid && saveTask(task)">
+							<div class="input-group">
+								<input type="text" class="form-control"
+									data-ng-model="task.title" required /> <input type="text"
+									class="form-control" data-ng-model="task.description" required />
+								<span class="input-group-btn edit-btn">
+									<button type="submit" class="btn btn-primary">Edit</button>
+								</span>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="column" style="background-color: rgb(184, 249, 184);">
+		<h2>In Progress</h2>
+		<p>{{(tasks | filter:{status:'IN_PROGRESS'}).length }} tasks</p>
+		<div data-ng-show="tasks.length>0">
+			<div class="row">
+				<div class="row ticket-wrap-snd"
+					ng-repeat="task in tasks | filter: { status: 'IN_PROGRESS' } | orderBy: 'createdOn' ">
+					<div class="ticket" data-ng-show="editedTask !== task">
+					<div class="col-sm-8 ticket-form">
+							<label class="col-sm-8">{{task.title}}</label>
+							<label class="col-sm-9 descrp">{{task.description}}</label>
+						</div>
+						<div class="col-sm-4 text-right action-icons">
+							<span class="glyphicon glyphicon-remove-circle"
+								data-ng-click="deleteTask(task)"></span> <span
+								class="glyphicon glyphicon-pencil"
+								data-ng-click="editTask(task)"></span> <span
+								class="glyphicon glyphicon-menu-right"
+								data-ng-click="doneTask(task)"></span>
+						</div>
+						<div class="col-sm-3 text-right action-icons"></div>
+					</div>
+
+					<div data-ng-show="editedTask === task" class="col-xs-12 edit-group">
+						<form role="form" name="editForm"
+							data-ng-submit="editForm.$valid && saveTask(task)">
+							<div class="input-group">
+								<input type="text" class="form-control"
+									data-ng-model="task.title" required /> <input type="text"
+									class="form-control" data-ng-model="task.description" required />
+								<span class="input-group-btn edit-btn">
+									<button type="submit" class="btn btn-primary">Edit</button>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="column" style="background-color: rgb(252, 224, 181);">
+		<h2>Done</h2>
+		<p>{{(tasks | filter:{status:'DONE'}).length }}  tasks</p>
+		<div data-ng-show="tasks.length>0">
+			<div class="row">
+				<div class="row ticket-wrap-thrd" ng-repeat="task in tasks | 
+							filter: { status: 'DONE' } | orderBy: 'createdOn' ">
+					<div class="ticket" data-ng-show="editedTask !== task">
+					<div class="col-sm-8 ticket-form">
+							<label class="col-sm-8">{{task.title}}</label>
+							<label class="col-sm-9 descrp">{{task.description}}</label>
+						</div>
+						<div class="col-sm-4 text-right action-icons">
+							<span class="glyphicon glyphicon-remove-circle"
+								data-ng-click="deleteTask(task)"></span> <span
+								class="glyphicon glyphicon-pencil"
+								data-ng-click="editTask(task)"></span> 
+						</div>
+						<div class="col-sm-3 text-right action-icons"></div>
+					</div>
+					<div data-ng-show="editedTask === task" class="col-xs-12 edit-group">
+						<form role="form" name="editForm"
+							data-ng-submit="editForm.$valid && saveTask(task)">
+							<div class="input-group">
+								<input type="text" class="form-control"
+									data-ng-model="task.title" required /> <input type="text"
+									class="form-control" data-ng-model="task.description" required />
+								<span class="input-group-btn edit-btn">
+									<button type="submit" class="btn btn-primary">Edit</button>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
